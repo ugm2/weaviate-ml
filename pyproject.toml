@@ -1,0 +1,20 @@
+[tool.poetry]
+name = "weaviate-ml"
+version = "0.1.0"
+description = "Weaviate's challenge project"
+authors = ["ugm2 <unaigaraymaestre@gmail.com>"]
+readme = "README.md"
+packages = [{include = "dataset", from = "src"}]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+
+
+[tool.poetry.group.dataset.dependencies]
+pandas = "^2.2.2"
+beautifulsoup4 = "^4.12.3"
+requests = "^2.32.2"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
