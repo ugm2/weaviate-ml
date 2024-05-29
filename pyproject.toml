@@ -12,6 +12,7 @@ weaviate-client = "^4.6.3"
 transformers = "^4.41.1"
 certifi = "^2024.2.2"
 rich = "^13.7.1"
+torch = "^2.3.0"
 
 
 [tool.poetry.group.dataset.dependencies]
