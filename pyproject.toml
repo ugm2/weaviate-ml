@@ -4,7 +4,11 @@ version = "0.1.0"
 description = "Weaviate's challenge project"
 authors = ["ugm2 <unaigaraymaestre@gmail.com>"]
 readme = "README.md"
-packages = [{include = "dataset", from = "src"}]
+packages = [
+    {include = "dataset", from = "src"},
+    {include = "weaviate_ml", from = "src"},
+    {include = "frontend", from = "src"},
+]
 
 [tool.poetry.dependencies]
 python = "^3.10"
@@ -13,6 +17,8 @@ transformers = "^4.41.1"
 certifi = "^2024.2.2"
 rich = "^13.7.1"
 torch = "^2.3.0"
+streamlit = "^1.35.0"
+watchdog = "^4.0.1"
 
 
 [tool.poetry.group.dataset.dependencies]
