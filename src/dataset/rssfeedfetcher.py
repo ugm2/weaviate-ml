@@ -71,7 +71,7 @@ class RSSFeedFetcher:
 
     def extract_article_content(self, title, url):
         try:
-            response = requests.get(url)
+            response = requests.get(url, timeout=30)
             soup = BeautifulSoup(response.content, "html.parser")
             paragraphs = soup.find_all("p")
             content = " ".join([para.get_text() for para in paragraphs[:5]])

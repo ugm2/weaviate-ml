@@ -22,7 +22,7 @@ if __name__ == "__main__":
     parser.add_argument(
         "--start_date",
         type=str,
-        default="2023-01-01",
+        default="2023-04-01",
         help="Start date (YYYY-MM-DD) (default: 2023-01-01)",
     )
     parser.add_argument(
