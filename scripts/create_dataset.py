@@ -40,7 +40,7 @@ if __name__ == "__main__":
     parser.add_argument(
         "--output_file",
         type=str,
-        default="rss_feed_articles.csv",
+        default="data/rss_feed_articles.csv",
         help="Output CSV file name (default: rss_feed_articles.csv)",
     )
 

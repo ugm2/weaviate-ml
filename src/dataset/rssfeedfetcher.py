@@ -108,10 +108,8 @@ class RSSFeedFetcher:
         return self.articles
 
     def save_to_csv(self, filename):
-        os.makedirs("data", exist_ok=True)
-        filepath = os.path.join("data", filename)
         df = pd.DataFrame(self.articles)
-        df.to_csv(filepath, index=False)
+        df.to_csv(filename, index=False)
         logger.info(
-            f"{len(self.articles)} RSS feed articles collected and saved to {filepath}"
+            f"{len(self.articles)} RSS feed articles collected and saved to {filename}"
         )

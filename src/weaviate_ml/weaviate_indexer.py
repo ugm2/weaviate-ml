@@ -25,7 +25,12 @@ class WeaviateIndexer:
                 wvc.Property(name="published", data_type=wvc.DataType.TEXT),
                 wvc.Property(name="summary", data_type=wvc.DataType.TEXT),
             ],
-            vectorizer_config=wvc.Configure.Vectorizer.text2vec_contextionary(),
+            vectorizer_config=wvc.Configure.Vectorizer.text2vec_openai(
+                model="text-embedding-3-small"
+            ),
+            generative_config=wvc.Configure.Generative.openai(
+                model="gpt-3.5-turbo", max_tokens=256, temperature=0.2
+            ),
         )
 
     def index_data(self, csv_path):
