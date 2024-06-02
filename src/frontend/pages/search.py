@@ -11,6 +11,8 @@ def show(container):
 
         examples = [
             "What is happening between Palestina and Israel?",
+            "What is EEUU's position in this conflict?",
+            "How is U.N. dealing with this situation?",
             "Who is Itamar Ben-Gvir?",
         ]
 
@@ -53,5 +55,8 @@ def show(container):
             st.subheader("Articles")
             for article in st.session_state.results["articles"]:
                 st.write(f"**{article.properties['title']}**")
+                cols = st.columns(5)
+                cols[0].markdown(f'`{article.properties["published"]}`')
+                cols[1].link_button("Go to link 🔗", article.properties["link"])
                 st.write(article.properties["summary"])
                 st.write("---")
