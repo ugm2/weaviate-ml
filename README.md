@@ -69,7 +69,7 @@ Data is fetched, processed, and indexed into Weaviate. The frontend allows users
 
 ## Future Improvements
 
-- More complex search capabilities: Reranker, query expansion, etc.
+- More complex search capabilities: Reranker, query expansion, filters, etc.
 - More comprehensive job openings analytics component. I didn't dig much into this part of the challenge because of time, so I just did a naive implementation and a frontend component.
 - Production ready search engine: tests, CI/CD, Cloud infrastructure, etc.
 
