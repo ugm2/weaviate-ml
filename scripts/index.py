@@ -8,7 +8,7 @@ def main():
     parser.add_argument(
         "--csv_path",
         type=str,
-        required=True,
+        default="data/rss_feed_articles.csv",
         help="Path to the CSV file containing the data to index",
     )
     args = parser.parse_args()
