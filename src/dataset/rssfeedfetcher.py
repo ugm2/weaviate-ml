@@ -55,7 +55,7 @@ class RSSFeedFetcher:
                 title = item.find("title").text if item.find("title") else ""
                 link = item.find("link").text if item.find("link") else ""
                 published = item.find("pubDate").text if item.find("pubDate") else ""
-                summary = self.extract_article_content(title, link)
+                summary = self.extract_article_content(link)
                 if summary is not None:
                     articles.append(
                         {
@@ -69,25 +69,13 @@ class RSSFeedFetcher:
                 sleep(random.uniform(1, 3))  # to avoid being blocked by the server
         return articles
 
-    def extract_article_content(self, title, url):
+    def extract_article_content(self, url):
         try:
             response = requests.get(url, timeout=30)
             soup = BeautifulSoup(response.content, "html.parser")
             paragraphs = soup.find_all("p")
-            content = " ".join([para.get_text() for para in paragraphs[:5]])
-            content = f"Title: {title}. Content: {content}"
-
-            if len(content) < 130:
-                return None
-
-            summary = self.summarization_pipeline(
-                content,
-                max_length=130,
-                min_length=30,
-                do_sample=False,
-            )
-
-            return summary[0]["summary_text"]
+            summary = " ".join([para.get_text() for para in paragraphs[:7]])
+            return summary
         except Exception as e:
             logger.error(f"Failed to extract article content from {url}: {e}")
             return None

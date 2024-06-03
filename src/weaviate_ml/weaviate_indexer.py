@@ -1,7 +1,14 @@
 import weaviate
 import weaviate.classes.config as wvc
 import pandas as pd
-from rich import print
+from rich.progress import (
+    Progress,
+    TimeElapsedColumn,
+    TimeRemainingColumn,
+    TextColumn,
+    BarColumn,
+    TaskProgressColumn,
+)
 
 
 class WeaviateIndexer:
@@ -29,24 +36,39 @@ class WeaviateIndexer:
                 model="text-embedding-3-small"
             ),
             generative_config=wvc.Configure.Generative.openai(
-                model="gpt-3.5-turbo", max_tokens=256, temperature=0.2
+                model="gpt-4", max_tokens=256, temperature=0.2
             ),
         )
 
     def index_data(self, csv_path):
         df = pd.read_csv(csv_path)
+        total_articles = len(df)
 
         with self.client.batch.dynamic() as batch:
-            for i, row in df.iterrows():
-                properties = {
-                    "title": row["title"],
-                    "link": row["link"],
-                    "published": row["published"],
-                    "summary": row["summary"],
-                }
-                batch.add_object(collection=self.collection_name, properties=properties)
-                if i % 100 == 0:
-                    print(f"Indexed {i} articles")
+            with Progress(
+                TextColumn(
+                    "[progress.description]{task.description} ({task.completed}/{task.total})"
+                ),
+                BarColumn(),
+                TaskProgressColumn(),
+                TimeElapsedColumn(),
+                TimeRemainingColumn(),
+            ) as progress:
+                task = progress.add_task(
+                    "[cyan]Indexing articles",
+                    total=total_articles,
+                )
+                for i, row in df.iterrows():
+                    properties = {
+                        "title": row["title"],
+                        "link": row["link"],
+                        "published": row["published"],
+                        "summary": row["summary"],
+                    }
+                    batch.add_object(
+                        collection=self.collection_name, properties=properties
+                    )
+                    progress.update(task, advance=1)
             batch.flush()  # Ensure all remaining data is sent
 
     def __del__(self):

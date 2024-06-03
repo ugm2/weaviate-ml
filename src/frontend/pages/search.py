@@ -2,6 +2,16 @@ import streamlit as st
 from weaviate_ml.weaviate_searcher import WeaviateSearcher
 
 
+@st.cache_data()
+def search_and_respond(query, limit=5):
+    answer, articles = st.session_state.searcher.search_and_respond(query, limit)
+    return_articles = []
+    for article in articles:
+        article.uuid = str(article.uuid)
+        return_articles.append(article)
+    return answer, articles
+
+
 def show(container):
     with container:
         st.title("Search Articles")
@@ -27,7 +37,7 @@ def show(container):
             placeholder="Type your search query here...",
         )
 
-        limit = st.slider("Number of results", 1, 20, 10)
+        limit = st.slider("Number of results", 1, 5, 5)
 
         if st.button("Search"):
 
@@ -38,9 +48,7 @@ def show(container):
                     else st.session_state.searcher
                 )
 
-                answer, articles = st.session_state.searcher.search_and_respond(
-                    query, limit
-                )
+                answer, articles = search_and_respond(query, limit)
 
                 # Store the results in session state
                 st.session_state.results = {"answer": answer, "articles": articles}
@@ -55,8 +63,7 @@ def show(container):
             st.subheader("Articles")
             for article in st.session_state.results["articles"]:
                 st.write(f"**{article.properties['title']}**")
-                cols = st.columns(5)
-                cols[0].markdown(f'`{article.properties["published"]}`')
-                cols[1].link_button("Go to link 🔗", article.properties["link"])
+                st.markdown(f'`{article.properties["published"]}`')
+                st.link_button("Go to link 🔗", article.properties["link"])
                 st.write(article.properties["summary"])
                 st.write("---")
