@@ -4,6 +4,10 @@
 
 This project is part of the Weaviate Machine Learning Engineer challenge. It demonstrates a workflow utilizing Weaviate to process, index, and search data, with a user-friendly frontend for interaction. Additionally, this project includes a job openings analytics component, showcasing my ability to handle both the UI and data modulation aspects of the challenge.
 
+**You can access the frontend by clicking [here](https://0c97-83-49-112-195.ngrok-free.app/).**
+
+Be mindful of the usage, there are not many credits for the underlying LLM API when searching.
+
 ## Technologies Used
 
 - Python 3.10
